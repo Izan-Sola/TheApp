@@ -1,2 +1,2 @@
 # TheApp
-A "dont-click-the-button" kind game. 
+Making this to learn JavaFX
