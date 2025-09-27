@@ -15,12 +15,8 @@
     </padding>
 
     <Label fx:id="welcomeText"/>
-    <Button fx:id="TheButton" style="-fx-font-size:13" prefWidth="90" prefHeight="45" text="The Button" onAction="#onHelloButtonClick"/>
+    <Button fx:id="TheButton" style="-fx-font-size:18" prefWidth="140" prefHeight="95" text="The Button" onAction="#onHelloButtonClick"/>
 
     <TextField fx:id="textField" opacity="0"/>
-    <HBox  style="-fx-border-color: black; -fx-border-width: 1;" fx:id="optionList" opacity="0" spacing="10" alignment="CENTER">
-        <Button text="I downloaded it" fx:id="download"/>
-        <Button text="Someone shared it" fx:id="shared"/>
-        <Button text="It just appeared" fx:id="appeared"/>
-    </HBox>
+
 </VBox>

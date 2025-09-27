@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="me.shinyshadow_.apptest.demo.AnswersController"
+            style="-fx-background-color: transparent;"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <HBox  style="-fx-background-color: transparent;" fx:id="optionList" spacing="10" alignment="CENTER">
+        <Button text="I downloaded it" prefWidth="120" prefHeight="35"  fx:id="download" onAction="#onAnswerChosen"/>
+        <Button text="Someone shared it" prefWidth="120" prefHeight="35" fx:id="shared" onAction="#onAnswerChosen"/>
+        <Button text="It just appeared" prefWidth="120" prefHeight="35" fx:id="appeared" onAction="#onAnswerChosen"/>
+    </HBox>
+</AnchorPane>
