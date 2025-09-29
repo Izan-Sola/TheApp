@@ -178,7 +178,7 @@ public class HelloController {
         } else if (sequenceNumber == 2) {
             System.out.println("Seq Number 2");
 
-            appShake();
+            appShake(5);
             for (int i = 0; i < dialogue.size(); i++) {
                 int index = i;
                 int r = 255;
@@ -204,19 +204,20 @@ public class HelloController {
         sequenceDialogue.play();
     }
 
-    private void appShake() {
+    private void appShake(int strength) {
         int mod;
+        
         for(int i = 0; i <= 200; i++) {
             if(i%2==0) mod = -1;
             else mod = 1;
             int fI = i;
             int fMod = mod;
-
+            int fStrength = strength
             new Thread(() -> {
                 try { Thread.sleep(50*fI);
                 } catch (InterruptedException ignored) {}
-                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*15*(fMod)));
-                else stage.setX(stage.getX()+(Math.random()*15*(fMod)));
+                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*fStrength*(fMod)));
+                else stage.setX(stage.getX()+(Math.random()*fStrength*(fMod)));
             }).start();
         }
     }
