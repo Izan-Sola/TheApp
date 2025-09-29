@@ -67,8 +67,8 @@ public class HelloController {
         stage = (Stage) scene.getWindow();
         ansStage = HelloApplication.answersStage;
 
-      //  appShake();
-       // if(true)return;
+        appShake();
+        if(true) return;
         textField.setOnKeyPressed(event -> {
 
             this.pressedKey = event.getCode();
@@ -213,10 +213,10 @@ public class HelloController {
             int fMod = mod;
 
             new Thread(() -> {
-                try { Thread.sleep(80*fI);
+                try { Thread.sleep(50*fI);
                 } catch (InterruptedException ignored) {}
-                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*5*(fMod)));
-                else stage.setX(stage.getX()+(Math.random()*5*(fMod)));
+                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*15*(fMod)));
+                else stage.setX(stage.getX()+(Math.random()*15*(fMod)));
             }).start();
         }
     }
