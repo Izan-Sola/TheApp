@@ -1,10 +1,8 @@
-module me.shinyshadow_.apptest.demo {
+module me.shinyshadow_.japp {
     requires javafx.controls;
     requires javafx.fxml;
-    requires jdk.xml.dom;
-    requires java.desktop;
 
 
-    opens me.shinyshadow_.apptest.demo to javafx.fxml;
-    exports me.shinyshadow_.apptest.demo;
+    opens me.shinyshadow_.japp to javafx.fxml;
+    exports me.shinyshadow_.japp;
 }
