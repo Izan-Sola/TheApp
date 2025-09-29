@@ -34,10 +34,11 @@ public class HelloController {
     private List<String> seq1Dialogue1 = Arrays.asList("Stop it!", "Not fun.", "Annoying.", "Leave.",
                                                        "Just want peace.", "Solitude", "The Button");
     private List<String> seq2Dialogue = Arrays.asList("Why do you keep going?", "What's so fun about it?", "It wants you to stop.",
-                                                      "Go waste your time somewhere else!", "...");
-    private List<String> seq2Dialogue1 = Arrays.asList("Stop", "stOp", "sToP", "s t o p", "stop...");
+                                                      "Go waste your time somewhere else!", "...", "The App");
+    private List<String> seq2Dialogue1 = Arrays.asList("Stop", "sToP", "s t o p", "stop...", "The Button");
 
-    private List<String> seq3Dialogue1 = Arrays.asList("");
+    private List<String> seq3Dialogue1 = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.",
+                                                        "....", "..........", "..............", "I´m tired of you");
 
     private String defaultButton;
     @FXML private TextField textField;
@@ -58,7 +59,7 @@ public class HelloController {
     @FXML
     protected void onHelloButtonClick() throws InterruptedException {
 
-        System.out.println(sequencePaused + "" + sequenceNumber);
+        System.out.println(""+ clickCount + count + " -- " + sequenceNumber);
         if(!sequencePaused) startSequence();
 
         scene = welcomeText.getScene();
@@ -98,9 +99,12 @@ public class HelloController {
                     TheButton.setOpacity(1);
                     TheButton.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 22; -fx-border");
                     count = false;
+                    clickCount+=1;
                     startSequence();
                 }
                 case 115 -> {
+                    count = false;
+                    clickCount+=1;
                     startSequence();
                 }
             }
@@ -149,44 +153,48 @@ public class HelloController {
     protected void playDialogue(List<String> dialogue, Object talker) {
 
         Timeline sequenceDialogue = new Timeline();
-        if(sequenceNumber == 1) {
-            for (int i = 0; i < dialogue.size(); i++) {
-                int r = 255;
-                int g = Math.min(255, i * 40);
-                int b = Math.min(255, i * 40);
-                int index = i;
 
+        if(sequenceNumber == 1) {
+            new Thread(() -> {
+                try { Thread.sleep(9000);
+                } catch (InterruptedException ignored) {}
+                TheButton.setStyle(defaultButton);
+                count = true;
+            }).start();
+
+            for (int i = 0; i < dialogue.size(); i++) {
+                int index = i;
+                sequenceDialogue.getKeyFrames().add(
+                        new KeyFrame(Duration.seconds(i * (2 + Math.random())),
+                                ae -> {
+                                    switch (talker) {
+                                        case talkers.TheApp -> stage.setTitle(dialogue.get(index));
+                                        case talkers.TheButton -> TheButton.setText(dialogue.get(index));
+                                        default -> System.out.println("Unknown talker, 1");
+                                    }
+                                }));
+            }
+
+        } else if (sequenceNumber == 2) {
+            System.out.println("Seq Number 2");
+
+            appShake();
+            for (int i = 0; i < dialogue.size(); i++) {
+                int index = i;
+                int r = 255;
+                int g = Math.min(255, i * 30);
+                int b = Math.min(255, i * 30);
                 String buttonStyle = String.format("-fx-text-fill: white; -fx-font-size: 22; -fx-background-color: rgb(%d,%d,%d);", r, g, b);
 
                 sequenceDialogue.getKeyFrames().add(
-                        new KeyFrame(Duration.seconds(i * (2 + Math.random())),
+                        new KeyFrame(Duration.seconds(i*(2.3+Math.random())),
                                 ae -> {
                                     switch (talker) {
                                         case talkers.TheApp -> stage.setTitle(dialogue.get(index));
                                         case talkers.TheButton -> {
                                             TheButton.setText(dialogue.get(index));
                                             TheButton.setStyle(buttonStyle);
-                                            if (index == 6) {
-                                                TheButton.setStyle(defaultButton);
-                                                count = true;
-                                            }
                                         }
-                                        default -> System.out.println("Unknown talker, 1");
-                                    }
-
-                                }));
-            }
-
-        } else if (sequenceNumber == 2) {
-            for (int i = 0; i < dialogue.size(); i++) {
-                int index = i;
-                sequenceDialogue.getKeyFrames().add(
-                        new KeyFrame(Duration.seconds(i*(2.3+Math.random())),
-
-                                ae -> {
-                                    switch (talker) {
-                                        case talkers.TheApp -> stage.setTitle(dialogue.get(index));
-                                        case talkers.TheButton -> TheButton.setText(dialogue.get(index));
                                         default -> System.out.println("Unknown talker, 2");
                                     }
                                 }));
@@ -197,9 +205,7 @@ public class HelloController {
     }
 
     private void appShake() {
-       // List<Integer> s = Arrays.asList();
         int mod;
-
         for(int i = 0; i <= 200; i++) {
             if(i%2==0) mod = -1;
             else mod = 1;

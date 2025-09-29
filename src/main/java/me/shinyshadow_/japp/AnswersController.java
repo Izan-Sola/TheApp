@@ -66,10 +66,7 @@ public class AnswersController {
                 int index = i;
                 answerDialogueTimeline.getKeyFrames().add(
                         new KeyFrame(Duration.seconds(i * 2),
-                                ae -> {
-                                         mainStage.setTitle(dialogue.get(index));
-
-                                }));
+                                ae -> mainStage.setTitle(dialogue.get(index))));
         }
         answerDialogueTimeline.play();
     }
