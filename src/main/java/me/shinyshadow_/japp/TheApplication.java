@@ -26,6 +26,7 @@ public class TheApplication extends Application {
         stage.setScene(scene);
         stage.show();
         stage.toFront();
+        stage.setResizable(false);
 
         FXMLLoader fxmlLoader1 = new FXMLLoader(TheApplication.class.getResource("answer-buttons.fxml"));
         answersScene = new Scene(fxmlLoader1.load(), 380, 35);

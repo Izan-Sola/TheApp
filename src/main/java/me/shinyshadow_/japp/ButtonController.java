@@ -38,7 +38,7 @@ public class ButtonController {
     private List<String> seq2Dialogue1 = Arrays.asList("Stop", "sToP", "s t o p", "stop...", "The Button");
 
     private List<String> seq3Dialogue1 = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.",
-                                                        "....", "..........", "..............", "I´m tired of you");
+                                                        "....", "..........", "..............", "You think you are smart?", "What now?");
 
     private String defaultButton;
     @FXML private TextField textField;
@@ -77,7 +77,8 @@ public class ButtonController {
             }
         });
 
-        //BarrierController.createBarrier();
+     //  BarrierController.createBarrier();
+    //   BarrierController.followMainWindow();
         if(count) {
             clickCount+=1;
 

@@ -33,9 +33,9 @@ public class AnswersController {
         if(sequenceNumber == 1) {
 
             switch (answer) {
-                case "I downloaded it" -> playDialogue(ans1Dialogue);
-                case "Someone shared it" -> playDialogue(ans2Dialogue);
-                case "It just appeared" -> playDialogue(ans3Dialogue);
+                case "I downloaded it" -> playAnswerDialogue(ans1Dialogue);
+                case "Someone shared it" -> playAnswerDialogue(ans2Dialogue);
+                case "It just appeared" -> playAnswerDialogue(ans3Dialogue);
             }
             new Thread(() -> {
                 try {
@@ -47,7 +47,7 @@ public class AnswersController {
         }
     }
 
-    protected void playDialogue(List<String> dialogue) {
+    protected void playAnswerDialogue(List<String> dialogue) {
 
         Stage mainStage = ButtonController.stage;
         Timeline answerDialogueTimeline = new Timeline();
