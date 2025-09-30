@@ -2,22 +2,12 @@ package me.shinyshadow_.japp;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
-import me.shinyshadow_.japp.HelloApplication;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AnswersController {
@@ -30,12 +20,12 @@ public class AnswersController {
                                         "Whatever it is...", "Do me a favor and uninstall me.", "Let me be in peace.", "The App");
 
     private Stage ansStage;
-    private int sequenceNumber = HelloController.sequenceNumber;
+    private int sequenceNumber = ButtonController.sequenceNumber;
 
     @FXML
     protected void onAnswerChosen(ActionEvent event) {
-        sequenceNumber = HelloController.sequenceNumber;
-        ansStage = HelloApplication.answersStage;
+        sequenceNumber = ButtonController.sequenceNumber;
+        ansStage = TheApplication.answersStage;
         ansStage.hide();
         Button clicked = (Button) event.getSource();
         String answer = clicked.getText();
@@ -51,7 +41,7 @@ public class AnswersController {
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {}
-                HelloController.count = true;
+                ButtonController.count = true;
             }).start();
 
         }
@@ -59,7 +49,7 @@ public class AnswersController {
 
     protected void playDialogue(List<String> dialogue) {
 
-        Stage mainStage = HelloController.stage;
+        Stage mainStage = ButtonController.stage;
         Timeline answerDialogueTimeline = new Timeline();
 
             for (int i = 0; i < dialogue.size(); i++) {
