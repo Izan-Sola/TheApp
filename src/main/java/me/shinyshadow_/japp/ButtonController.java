@@ -38,7 +38,9 @@ public class ButtonController {
     private List<String> seq2Dialogue1 = Arrays.asList("Stop", "sToP", "s t o p", "stop...", "The Button");
 
     private List<String> seq3Dialogue = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.");
-    private List<String> seq3Dialogue1 = Arrays.asList( "....", "..........", "..............", "You think you are smart?", "What now?");
+    private List<String> seq4Dialogue = Arrays.asList( "....", "..........", "You think you are smart?", "What now?");
+
+    private List<String> seq5Dialogue = Arrays.asList("Ok maybe you are...");
 
     private String defaultButton;
     @FXML private TextField textField;
@@ -67,15 +69,7 @@ public class ButtonController {
         stage = (Stage) scene.getWindow();
         ansStage = TheApplication.answersStage;
 
-      //  textField.setOnKeyPressed(event -> {
-      //      this.pressedKey = event.getCode();
-      //      if(event.getCode().equals(KeyCode.ENTER) && textField.getOpacity() == 1) {
-      //      }
-     //   });
-
-     //  BarrierController.createBarrier();
-    //   BarrierController.followMainWindow();
-        if(count) {
+    if(count) {
             clickCount+=1;
 
       if(TheButton.getOpacity() > 0.01 && clickCount < 95 && clickCount > 10)
@@ -108,6 +102,12 @@ public class ButtonController {
                         BarrierController.createBarrier();
                     }).start();
                     startSequence();
+                    clickCount+=1;
+                    count = false;
+                }
+                case 132 -> {
+                    startSequence();
+                    count=false;
                 }
             }
 //        if(clickCount > 75) {
@@ -138,8 +138,8 @@ public class ButtonController {
             timeline.play();
 
         } else if (sequenceNumber == 1) {
-                    playDialogue(seq1Dialogue, talkers.TheApp);
-                    playDialogue(seq1Dialogue1, talkers.TheButton);
+                   playDialogue(seq1Dialogue, talkers.TheApp);
+                   playDialogue(seq1Dialogue1, talkers.TheButton);
 
         } else if (sequenceNumber == 2) {
                    appShake(5, 200, 65);
@@ -148,7 +148,9 @@ public class ButtonController {
 
 
         } else if (sequenceNumber == 3) {
-                    playDialogue(seq3Dialogue, talkers.TheApp);
+                   playDialogue(seq3Dialogue, talkers.TheApp);
+        } else if (sequenceNumber ==4) {
+                   playDialogue(seq4Dialogue, talkers.TheApp);
         }
 
         sequenceNumber+=1;
@@ -161,8 +163,7 @@ public class ButtonController {
 
         if(sequenceNumber == 1) {
             new Thread(() -> {
-                try { Thread.sleep(9000);
-                } catch (InterruptedException ignored) {}
+                try { Thread.sleep(9000); } catch (InterruptedException ignored) {}
                 TheButton.setStyle(defaultButton);
                 count = true;
             }).start();
@@ -183,8 +184,8 @@ public class ButtonController {
         } else if (sequenceNumber == 2) {
             System.out.println("Seq Number 2");
             new Thread(() -> {
-                try { Thread.sleep(12000);
-                } catch (InterruptedException ignored) {}
+                try { Thread.sleep(12000); } catch (InterruptedException ignored) {}
+
                 TheButton.setStyle(defaultButton);
                 count = true;
             }).start();
@@ -210,10 +211,28 @@ public class ButtonController {
             }
 
         } else if (sequenceNumber == 3) {
+            new Thread(() -> {
+                try { Thread.sleep(6000); } catch (InterruptedException ignored) {}
+                count = true;
+            }).start();
+
             for (int i = 0; i < dialogue.size(); i++) {
                 int index = i;
                 sequenceDialogue.getKeyFrames().add(
                         new KeyFrame(Duration.seconds(i * (2)),
+                                 ae -> stage.setTitle(dialogue.get(index))));
+            }
+        } else if (sequenceNumber == 4) {
+            new Thread(() -> {
+                try { Thread.sleep(6000); } catch (InterruptedException ignored) {}
+                count = true;
+                BarrierController.followMainWindow();
+            }).start();
+
+            for (int i = 0; i < dialogue.size(); i++) {
+                int index = i;
+                sequenceDialogue.getKeyFrames().add(
+                        new KeyFrame(Duration.seconds(i * (1.5)),
                                 ae -> stage.setTitle(dialogue.get(index))));
             }
         }
