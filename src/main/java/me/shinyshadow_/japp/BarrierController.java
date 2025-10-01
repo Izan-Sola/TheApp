@@ -1,5 +1,6 @@
 package me.shinyshadow_.japp;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -11,13 +12,14 @@ public class BarrierController {
     static Stage mainStage = ButtonController.stage;
     static Stage barrier = TheApplication.barrierStage;
     public static void createBarrier() {
-        mainStage = ButtonController.stage;
-        barrier = TheApplication.barrierStage;
-        barrier.show();
+        Platform.runLater(() -> {
+            mainStage = ButtonController.stage;
+            barrier = TheApplication.barrierStage;
+            barrier.show();
 
-        barrier.setY(mainStage.getY()+97);
-        barrier.setX(mainStage.getX()+107);
-
+            barrier.setY(mainStage.getY() + 97);
+            barrier.setX(mainStage.getX() + 107);
+        });
     }
 
     public static void followMainWindow() {

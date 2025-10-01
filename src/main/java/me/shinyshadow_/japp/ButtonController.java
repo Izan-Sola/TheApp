@@ -37,15 +37,15 @@ public class ButtonController {
                                                       "Go waste your time somewhere else!", "...", "The App");
     private List<String> seq2Dialogue1 = Arrays.asList("Stop", "sToP", "s t o p", "stop...", "The Button");
 
-    private List<String> seq3Dialogue1 = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.",
-                                                        "....", "..........", "..............", "You think you are smart?", "What now?");
+    private List<String> seq3Dialogue = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.");
+    private List<String> seq3Dialogue1 = Arrays.asList( "....", "..........", "..............", "You think you are smart?", "What now?");
 
     private String defaultButton;
     @FXML private TextField textField;
     @FXML private Label welcomeText;
     @FXML private Button TheButton;
     @FXML private HBox optionList;
-    private boolean sequencePaused = false;
+    private boolean start = false;
     KeyCode pressedKey = KeyCode.ENTER;
     public static Stage stage;
     Window window;
@@ -60,22 +60,18 @@ public class ButtonController {
     protected void onHelloButtonClick() {
 
         System.out.println(""+ clickCount + count + " -- " + sequenceNumber);
-        if(!sequencePaused) startSequence();
+        if(!start) startSequence();
 
         scene = welcomeText.getScene();
         window = scene.getWindow();
         stage = (Stage) scene.getWindow();
         ansStage = TheApplication.answersStage;
 
-     //   appShake();
-        textField.setOnKeyPressed(event -> {
-
-            this.pressedKey = event.getCode();
-
-            if(event.getCode().equals(KeyCode.ENTER) && textField.getOpacity() == 1) {
-
-            }
-        });
+      //  textField.setOnKeyPressed(event -> {
+      //      this.pressedKey = event.getCode();
+      //      if(event.getCode().equals(KeyCode.ENTER) && textField.getOpacity() == 1) {
+      //      }
+     //   });
 
      //  BarrierController.createBarrier();
     //   BarrierController.followMainWindow();
@@ -95,7 +91,7 @@ public class ButtonController {
                 case 95 -> {
                     TheButton.setText("Damn it!");
                     TheButton.setOpacity(1);
-                    TheButton.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 22; -fx-border");
+                    TheButton.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 22; ");
                     count = false;
                     clickCount+=1;
                     startSequence();
@@ -106,7 +102,12 @@ public class ButtonController {
                     startSequence();
                 }
                 case 130 -> {
-                    BarrierController.createBarrier();
+                    new Thread(() -> {
+                        try { Thread.sleep(5000);
+                        } catch (InterruptedException ignored){}
+                        BarrierController.createBarrier();
+                    }).start();
+                    startSequence();
                 }
             }
 //        if(clickCount > 75) {
@@ -133,7 +134,7 @@ public class ButtonController {
                         ansStage.toFront();
                     }
             ));
-            sequencePaused = true;
+            start = true;
             timeline.play();
 
         } else if (sequenceNumber == 1) {
@@ -141,9 +142,13 @@ public class ButtonController {
                     playDialogue(seq1Dialogue1, talkers.TheButton);
 
         } else if (sequenceNumber == 2) {
+                   appShake(5, 200, 65);
                    playDialogue(seq2Dialogue, talkers.TheApp);
                    playDialogue(seq2Dialogue1, talkers.TheButton);
 
+
+        } else if (sequenceNumber == 3) {
+                    playDialogue(seq3Dialogue, talkers.TheApp);
         }
 
         sequenceNumber+=1;
@@ -177,8 +182,12 @@ public class ButtonController {
 
         } else if (sequenceNumber == 2) {
             System.out.println("Seq Number 2");
-
-            appShake();
+            new Thread(() -> {
+                try { Thread.sleep(12000);
+                } catch (InterruptedException ignored) {}
+                TheButton.setStyle(defaultButton);
+                count = true;
+            }).start();
             for (int i = 0; i < dialogue.size(); i++) {
                 int index = i;
                 int r = 255;
@@ -200,24 +209,32 @@ public class ButtonController {
                                 }));
             }
 
+        } else if (sequenceNumber == 3) {
+            for (int i = 0; i < dialogue.size(); i++) {
+                int index = i;
+                sequenceDialogue.getKeyFrames().add(
+                        new KeyFrame(Duration.seconds(i * (2)),
+                                ae -> stage.setTitle(dialogue.get(index))));
+            }
         }
         sequenceDialogue.play();
     }
 
-    private void appShake() {
+    private void appShake(int strength, int duration, int speed) {
         int mod;
-        for(int i = 0; i <= 200; i++) {
+        for(int i = 0; i <= duration; i++) {
             if(i%2==0) mod = -1;
             else mod = 1;
             int fI = i;
             int fMod = mod;
 
             new Thread(() -> {
-                try { Thread.sleep(50*fI);
+                try { Thread.sleep((long) speed *fI);
                 } catch (InterruptedException ignored) {}
-                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*15*(fMod)));
-                else stage.setX(stage.getX()+(Math.random()*15*(fMod)));
+                if(Math.random()>0.5) stage.setY(stage.getY()+(Math.random()*strength*(fMod)));
+                else stage.setX(stage.getX()+(Math.random()*strength*(fMod)));
             }).start();
         }
     }
+
 }
