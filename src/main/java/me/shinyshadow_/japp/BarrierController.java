@@ -37,7 +37,8 @@ public class BarrierController {
     }
 
     public static void destroyBarrier() {
-
+        barrier.hide();
+        barrier.close();
     }
 
 }

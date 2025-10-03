@@ -40,8 +40,7 @@ public class ButtonController {
     private List<String> seq3Dialogue = Arrays.asList("...", "Can you not???", "...", "Bam.", "Try to click it now, jerk.");
     private List<String> seq4Dialogue = Arrays.asList( "....", "..........", "You think you are smart?", "What now?");
 
-    private List<String> seq5Dialogue = Arrays.asList("Ok maybe you are...");
-
+    private List<String> seq5Dialogue = Arrays.asList("Ok maybe you are...", "Whatever.", "Keep clicking if you want.", "Im not who will have to deal with the consequences!", "You do you...", "The App");
     private String defaultButton;
     @FXML private TextField textField;
     @FXML private Label welcomeText;
@@ -61,23 +60,41 @@ public class ButtonController {
     @FXML
     protected void onHelloButtonClick() {
 
-        System.out.println(""+ clickCount + count + " -- " + sequenceNumber);
-        if(!start) startSequence();
+        System.out.println("" + clickCount + count + " -- " + sequenceNumber);
+        if (!start) {
+            // sequenceNumber == 0 block
+            defaultButton = TheButton.getStyle();
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.millis(1000),
+                    ae -> stage.setTitle(seq0Dialogue.get(0))),
+                    new KeyFrame(
+                            Duration.millis(2000),
+                            ae -> {
+                                stage.setTitle(seq0Dialogue.get(1));
+                                ansStage.show();
+                                ansStage.toFront();
+                            }
+                    ));
+            start = true;
+            timeline.play();
+
+            sequenceNumber += 1;
+        }
 
         scene = welcomeText.getScene();
         window = scene.getWindow();
         stage = (Stage) scene.getWindow();
         ansStage = TheApplication.answersStage;
 
-    if(count) {
-            clickCount+=1;
+        if (count) {
+            clickCount += 1;
 
-      if(TheButton.getOpacity() > 0.01 && clickCount < 95 && clickCount > 10)
-                TheButton.setOpacity(TheButton.getOpacity()-0.05);
+            if (TheButton.getOpacity() > 0.01 && clickCount < 95 && clickCount > 10)
+                TheButton.setOpacity(TheButton.getOpacity() - 0.05);
 
-            switch(clickCount) {
+            switch (clickCount) {
                 case 30 -> stage.setTitle("Stop it.");
-                case 45 -> stage.setTitle("Have you considered it doesn't want to be clicked?") ;
+                case 45 -> stage.setTitle("Have you considered it doesn't want to be clicked?");
                 case 55 -> stage.setTitle("It faded away for a reason.");
                 case 65 -> stage.setTitle("...");
                 case 75 -> stage.setTitle("........");
@@ -87,73 +104,85 @@ public class ButtonController {
                     TheButton.setOpacity(1);
                     TheButton.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 22; ");
                     count = false;
-                    clickCount+=1;
-                    startSequence();
+                    clickCount += 1;
+
+                    // sequenceNumber == 1 block
+                    playDialogue(seq1Dialogue, talkers.TheApp);
+                    playDialogue(seq1Dialogue1, talkers.TheButton);
+
+                    sequenceNumber += 1;
                 }
                 case 115 -> {
                     count = false;
-                    clickCount+=1;
-                    startSequence();
+                    clickCount += 1;
+
+                    // sequenceNumber == 2 block
+                    appShake(5, 200, 65);
+                    playDialogue(seq2Dialogue, talkers.TheApp);
+                    playDialogue(seq2Dialogue1, talkers.TheButton);
+
+                    sequenceNumber += 1;
                 }
                 case 130 -> {
                     new Thread(() -> {
-                        try { Thread.sleep(5000);
-                        } catch (InterruptedException ignored){}
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ignored) {
+                        }
                         BarrierController.createBarrier();
                     }).start();
-                    startSequence();
-                    clickCount+=1;
+
+                    // sequenceNumber == 3 block
+                    playDialogue(seq3Dialogue, talkers.TheApp);
+
+                    sequenceNumber += 1;
                     count = false;
                 }
                 case 132 -> {
-                    startSequence();
-                    count=false;
+
+                    // sequenceNumber == 4 block
+                    playDialogue(seq4Dialogue, talkers.TheApp);
+
+                    sequenceNumber += 1;
+                    count = false;
+                }
+                case 134 -> {
+
+                    BarrierController.destroyBarrier();
+
+                    // sequenceNumber == 5 block
+                    playDialogue(seq5Dialogue, talkers.TheApp);
+
+                    sequenceNumber += 1;
+                    count = false;
+                }
+                case 145 -> {
+                    appShake(5, 15, 50);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(90,50,50); -fx-border-color: black; -fx-border-width: 2;");
+                }
+                case 160 -> {
+                    appShake(6, 22, 48);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(130,40,40); -fx-border-color: black; -fx-border-width: 2;");
+                }
+                case 175 -> {
+                    appShake(8, 27, 45);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(170,30,30); -fx-border-color: black; -fx-border-width: 2;");
+                }
+                case 190 -> {
+                    appShake(10, 40, 40);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(210,20,20); -fx-border-color: black; -fx-border-width: 2;");
+                }
+                case 215 -> {
+                    appShake(10, 40, 40);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(240,10,10); -fx-border-color: black; -fx-border-width: 2;");
+                }
+                case 230 -> {
+                    appShake(12, 200, 35);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(255,0,0); -fx-border-color: black; -fx-border-width: 2;");
                 }
             }
-//        if(clickCount > 75) {
-//            y+=1;
-//            window.setY(window.getY()+4+y);
-//       }
-        }
-        else return;
-
-    }
-
-    protected void startSequence(){
-
-        if (sequenceNumber == 0) {
-            defaultButton = TheButton.getStyle();
-            Timeline timeline = new Timeline(new KeyFrame(
-                    Duration.millis(1000),
-                    ae -> stage.setTitle(seq0Dialogue.get(0))),
-            new KeyFrame(
-                    Duration.millis(2000),
-                    ae -> {
-                        stage.setTitle(seq0Dialogue.get(1));
-                        ansStage.show();
-                        ansStage.toFront();
-                    }
-            ));
-            start = true;
-            timeline.play();
-
-        } else if (sequenceNumber == 1) {
-                   playDialogue(seq1Dialogue, talkers.TheApp);
-                   playDialogue(seq1Dialogue1, talkers.TheButton);
-
-        } else if (sequenceNumber == 2) {
-                   appShake(5, 200, 65);
-                   playDialogue(seq2Dialogue, talkers.TheApp);
-                   playDialogue(seq2Dialogue1, talkers.TheButton);
-
-
-        } else if (sequenceNumber == 3) {
-                   playDialogue(seq3Dialogue, talkers.TheApp);
-        } else if (sequenceNumber ==4) {
-                   playDialogue(seq4Dialogue, talkers.TheApp);
-        }
-
-        sequenceNumber+=1;
+        } else
+            return;
 
     }
 
@@ -233,6 +262,18 @@ public class ButtonController {
                 int index = i;
                 sequenceDialogue.getKeyFrames().add(
                         new KeyFrame(Duration.seconds(i * (1.5)),
+                                ae -> stage.setTitle(dialogue.get(index))));
+            }
+        } else if (sequenceNumber == 5) {
+
+            new Thread(() -> {
+                try { Thread.sleep(6000); } catch (InterruptedException ignored) {}
+                count = true;
+            }).start();
+            for (int i = 0; i < dialogue.size(); i++) {
+                int index = i;
+                sequenceDialogue.getKeyFrames().add(
+                        new KeyFrame(Duration.seconds(i * (2)),
                                 ae -> stage.setTitle(dialogue.get(index))));
             }
         }
