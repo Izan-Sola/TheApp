@@ -31,7 +31,7 @@ public class AppController {
     private List<String> seq1Dialogue = Arrays.asList("See!?", "You made it angry.", "I told you to stop.",
                                                       "Why don't you leave us alone?", "Let us be in peace.", "The App");
     private List<String> seq1Dialogue1 = Arrays.asList("Stop it!", "Not fun.", "Annoying.", "Leave.",
-                                                       "Just want peace.", "Solitude", "The Button");
+                                                       "Stop", "Solitude", "The Button");
     private List<String> seq2Dialogue = Arrays.asList("Why do you keep going?", "What's so fun about it?", "It wants you to stop.",
                                                       "Go waste your time somewhere else!", "...", "The App");
     private List<String> seq2Dialogue1 = Arrays.asList("Stop", "sToP", "s t o p", "stop...", "The Button");
@@ -62,6 +62,7 @@ public class AppController {
 
         System.out.println("" + clickCount + count + " -- " + sequenceNumber);
         if (!start) {
+           // clickCount=225;
             // sequenceNumber == 0 block
             defaultButton = TheButton.getStyle();
             Timeline timeline = new Timeline(new KeyFrame(
@@ -86,8 +87,6 @@ public class AppController {
         stage = (Stage) scene.getWindow();
         ansStage = TheApplication.answersStage;
 
-       // ButtonController.wallSlams(TheButton, scene);
-
         if (count) {
             clickCount += 1;
 
@@ -104,7 +103,7 @@ public class AppController {
                 case 95 -> {
                     TheButton.setText("Damn it!");
                     TheButton.setOpacity(1);
-                    TheButton.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 22; ");
+                    TheButton.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-background-color: red; -fx-text-fill: white; -fx-font-size: 21; ");
                     count = false;
                     clickCount += 1;
 
@@ -158,28 +157,42 @@ public class AppController {
                 }
                 case 145 -> {
                     appShake(5, 15, 50);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(90,50,50); -fx-border-color: black; -fx-border-width: 2;");
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(240,220,220); -fx-border-color: black; -fx-border-width: 2;");
                 }
                 case 160 -> {
                     appShake(6, 22, 48);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(130,40,40); -fx-border-color: black; -fx-border-width: 2;");
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(255,180,180); -fx-border-color: black; -fx-border-width: 2;");
                 }
                 case 175 -> {
                     appShake(8, 27, 45);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(170,30,30); -fx-border-color: black; -fx-border-width: 2;");
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(255,130,130); -fx-border-color: black; -fx-border-width: 2;");
                 }
                 case 190 -> {
                     appShake(10, 40, 40);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(210,20,20); -fx-border-color: black; -fx-border-width: 2;");
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(255,80,80); -fx-border-color: black; -fx-border-width: 2;");
                 }
                 case 215 -> {
                     appShake(10, 40, 40);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(240,10,10); -fx-border-color: black; -fx-border-width: 2;");
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(255,40,40); -fx-border-color: black; -fx-border-width: 2;");
                 }
                 case 230 -> {
-                    appShake(12, 200, 35);
-                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold; -fx-background-color: rgb(255,0,0); -fx-border-color: black; -fx-border-width: 2;");
+                    appShake(16, 35, 25);
+                    TheButton.setStyle("-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold; " +
+                            "-fx-background-color: rgb(255,0,0); -fx-border-color: black; -fx-border-width: 2;");
+
+                    new Thread(() -> {
+                        try { Thread.sleep(600);
+                        } catch (InterruptedException ignored) {}
+
+                        ButtonController.wallSlams(TheButton, scene);
+                    }).start();
                 }
+
             }
         } else
             return;
