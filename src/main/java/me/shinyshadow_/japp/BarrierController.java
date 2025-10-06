@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 public class BarrierController {
     @FXML private static Button TheButton;
 
-    private static volatile boolean follow = true;
-    static Stage mainStage = ButtonController.stage;
+    private static  boolean follow = true;
+    static Stage mainStage = AppController.stage;
     static Stage barrier = TheApplication.barrierStage;
     public static void createBarrier() {
         Platform.runLater(() -> {
-            mainStage = ButtonController.stage;
+            mainStage = AppController.stage;
             barrier = TheApplication.barrierStage;
             barrier.show();
 

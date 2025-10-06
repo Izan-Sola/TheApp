@@ -20,11 +20,11 @@ public class AnswersController {
                                         "Whatever it is...", "Do me a favor and uninstall me.", "Let me be in peace.", "The App");
 
     private Stage ansStage;
-    private int sequenceNumber = ButtonController.sequenceNumber;
+    private int sequenceNumber = AppController.sequenceNumber;
 
     @FXML
     protected void onAnswerChosen(ActionEvent event) {
-        sequenceNumber = ButtonController.sequenceNumber;
+        sequenceNumber = AppController.sequenceNumber;
         ansStage = TheApplication.answersStage;
         ansStage.hide();
         Button clicked = (Button) event.getSource();
@@ -41,7 +41,7 @@ public class AnswersController {
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {}
-                ButtonController.count = true;
+                AppController.count = true;
             }).start();
 
         }
@@ -49,7 +49,7 @@ public class AnswersController {
 
     protected void playAnswerDialogue(List<String> dialogue) {
 
-        Stage mainStage = ButtonController.stage;
+        Stage mainStage = AppController.stage;
         Timeline answerDialogueTimeline = new Timeline();
 
             for (int i = 0; i < dialogue.size(); i++) {
