@@ -39,7 +39,7 @@ public class ButtonController {
                         }),
                 new KeyFrame( Duration.millis(2800),
                         ae -> {
-                                    randomMovement(TheButton, scene);
+                            ButtonController.randomMovement(TheButton, scene);
                         }));
 
         timeline.play();
@@ -113,7 +113,7 @@ public class ButtonController {
     }
 
     public static void randomMovement(Button TheButton, Scene scene) {
-
+        
         TranslateTransition move = new TranslateTransition(Duration.millis(1000), TheButton);
         move.setInterpolator(Interpolator.LINEAR);
 
@@ -123,13 +123,24 @@ public class ButtonController {
         double limitX = stage.getX();
         double limitY = stage.getY();
 
-        double posX = Math.random() * limitX;
-        double posY = Math.random() * limitY;
+        double targetX = Math.random() * limitX;
+        double targetY = Math.random() * limitY;
 
-        move.setToX( (Math.random() < 0.5) ? posX : -posX );
-        move.setToY( (Math.random() < 0.5) ? posY : -posY );
+        move.setToX( (Math.random() < 0.5) ? targetX : -targetX );
+        move.setToY( (Math.random() < 0.5) ? -targetY : targetY );
 
+        double dX = Math.abs(move.getToX() - TheButton.getLayoutX());
+        double dY = Math.abs(move.getToY() - TheButton.getLayoutY());
+        double distance = Math.sqrt(dX * dX + dY * dY);
+        move.setDuration(Duration.millis(distance));
         move.play();
 
+        new Thread(() -> {
+            try { Thread.sleep((long) (distance + 75));
+            } catch (InterruptedException ignored) {}
+            randomMovement(TheButton, scene);
+        }).start();
+        //
+        //
     }
 }
