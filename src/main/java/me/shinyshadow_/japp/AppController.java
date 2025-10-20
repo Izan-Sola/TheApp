@@ -60,7 +60,10 @@ public class AppController {
     private void onHelloButtonClick() {
 
 
+
         System.out.println("" + clickCount + count + " -- " + sequenceNumber);
+
+
         if (!start) {
            // clickCount=225;
             // sequenceNumber == 0 block
@@ -86,7 +89,7 @@ public class AppController {
         window = scene.getWindow();
         stage = (Stage) scene.getWindow();
         ansStage = TheApplication.answersStage;
-
+        ButtonController.randomMovement(TheButton, scene);
         if (count) {
             clickCount += 1;
 

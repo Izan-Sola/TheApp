@@ -3,8 +3,11 @@ import javafx.animation.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import static java.lang.Math.random;
 
 public class ButtonController {
 
@@ -33,7 +36,12 @@ public class ButtonController {
                             doSlam(initialLoc, TheButton, 210, -300, 1);
                             expandAppBorder(scene, 1, 0);
 
+                        }),
+                new KeyFrame( Duration.millis(2800),
+                        ae -> {
+                                    randomMovement(TheButton, scene);
                         }));
+
         timeline.play();
 
     }
@@ -102,5 +110,26 @@ public class ButtonController {
         new Thread(() -> { try { Thread.sleep(300); } catch(InterruptedException ignored) {}
             AppController.appShake(16, 15, 12);
         }).start();
+    }
+
+    public static void randomMovement(Button TheButton, Scene scene) {
+
+        TranslateTransition move = new TranslateTransition(Duration.millis(1000), TheButton);
+        move.setInterpolator(Interpolator.LINEAR);
+
+        Stage stage = (Stage) scene.getWindow();
+        System.out.println(stage.getX());
+
+        double limitX = stage.getX();
+        double limitY = stage.getY();
+
+        double posX = Math.random() * limitX;
+        double posY = Math.random() * limitY;
+
+        move.setToX( (Math.random() < 0.5) ? posX : -posX );
+        move.setToY( (Math.random() < 0.5) ? posY : -posY );
+
+        move.play();
+
     }
 }
